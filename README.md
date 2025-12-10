@@ -110,9 +110,33 @@ DADATA_TOKEN=токен
 
 ## 5. Запуск
 
+### 5.1. Этап 1 - сбор основных данных
+
 ```bash
-python -m src.main
+python -m src.main collect
 ```
+
+После выполнения появятся:
+
+data/regions_and_cities.csv
+data/it_companies_okved_62_63.csv
+
+Далее необходимо вручную выполнить следующие действия:
+
+1. Открыть файл data/it_companies_okved_62_63.csv
+2. Взять список ИНН
+3. Загрузить на сайт **https://rmsp.nalog.ru/search.html?mode=inn-list#**
+4. Скачать Excel-файл с информацией
+5. Сохранить в папку data/companyinfo.xlsx
+6. Можно перейти к этапу 2
+
+### 5.2. Этап 2 - объединение данных + обогащение через DaData
+
+```bash
+python -m src.main process
+```
+
+На выходе получится файл data/companies.csv - необходимый результат
 
 ## 6. Для повторного запуска удалить промежуточные файлы:
 
@@ -121,11 +145,7 @@ it_companies_okved_62_63.csv
 companies_noFilter.csv
 companies.csv
 
-и повторное выполнение:
-
-```bash
-python -m src.main
-```
+и повторное выполнение шагов 5.1 и 5.2.
 
 ## 7. Завершение работы
 
