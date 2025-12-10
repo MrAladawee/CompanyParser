@@ -1,0 +1,56 @@
+# -----------------------------
+# Python cache / build artifacts
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.so
+build/
+dist/
+
+# -----------------------------
+# Virtual environment (local venv)
+# -----------------------------
+.venv/
+venv/
+env/
+
+# -----------------------------
+# Environment variables (SECRETS)
+# -----------------------------
+.env
+.env.*
+!.env.example
+
+# -----------------------------
+# VS Code settings
+# -----------------------------
+.vscode/
+
+# -----------------------------
+# Jupyter Notebook junk
+# -----------------------------
+.ipynb_checkpoints/
+
+# -----------------------------
+# System files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Data files (your parser output)
+# -----------------------------
+data/*.csv
+data/*.xlsx
+data/*.xls
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+logs/
