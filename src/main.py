@@ -2,10 +2,10 @@ import sys
 import csv
 import tqdm
 
-from scraper.regions_cities import get_region_links, get_city_links
-from scraper.okved import extract_okved_links, extract_companies
-from processing.merge_info import merge_company_info
-from processing.enrich_dadata import enrich_with_dadata
+from src.scraper.regions_cities import get_region_links, get_city_links
+from src.scraper.okved import extract_okved_links, extract_companies
+from src.processing.merge_info import merge_company_info
+from src.processing.enrich_dadata import enrich_with_dadata
 
 
 # ==========================
