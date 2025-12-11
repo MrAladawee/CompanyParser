@@ -1,22 +1,30 @@
 import sys
 import csv
 import tqdm
+import os
 
 from src.scraper.regions_cities import get_region_links, get_city_links
 from src.scraper.okved import extract_okved_links, extract_companies
 from src.processing.merge_info import merge_company_info
 from src.processing.enrich_dadata import enrich_with_dadata
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+
+def ensure_data_dir():
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
 
 # ==========================
 # ЭТАП 1 — СБОР ИНН
 # ==========================
 def step1_collect_regions_cities():
     print("[1/2] Сбор регионов и городов...")
+    ensure_data_dir()
     regions = get_region_links()
     all_data = []
 
-    for region in regions:
+    for region in tqdm.tqdm(regions, desc = "Регионы"):
         cities = get_city_links(region["region_url"])
         for city in cities:
             all_data.append({
@@ -26,7 +34,8 @@ def step1_collect_regions_cities():
                 "city_url": city['city_url']
             })
 
-    with open("data/regions_and_cities.csv", "w", encoding="utf-8", newline="") as f:
+    FILE_PATH = os.path.join(DATA_DIR, "regions_and_cities.csv")
+    with open(FILE_PATH, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["region_name", "region_url", "city_name", "city_url"])
         writer.writeheader()
         writer.writerows(all_data)
@@ -37,10 +46,12 @@ def step1_collect_regions_cities():
 def step2_collect_companies():
     print("[2/2] Сбор компаний по ОКВЭД (62/63)...")
 
-    with open("data/regions_and_cities.csv", encoding="utf-8") as infile:
+    REGIONS_FILE = os.path.join(DATA_DIR, "regions_and_cities.csv")
+    with open(REGIONS_FILE, encoding="utf-8") as infile:
         rows = list(csv.DictReader(infile))
 
-    with open("data/it_companies_okved_62_63.csv", "w", encoding="utf-8", newline="") as outfile:
+    COMPANIES_FILE = os.path.join(DATA_DIR, "it_companies_okved_62_63.csv")
+    with open(COMPANIES_FILE, "w", encoding="utf-8", newline="") as outfile:
         writer = csv.writer(outfile)
         writer.writerow(["region", "city", "company_name", "inn", "link", "okved", "address"])
 
