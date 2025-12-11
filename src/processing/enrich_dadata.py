@@ -31,9 +31,10 @@ def enrich_with_dadata():
                     address = data.get("address", {}).get("unrestricted_value", "")
                     manager = data.get("management", {}).get("name", "")
                 else:
-                    address = ""
-                    manager = ""
-            except Exception:
+                    address = "1"
+                    manager = "1"
+            except Exception as e:
+                print(f"Ошибка при обработке ИНН {inn}: {e}")
                 address = ""
                 manager = ""
 
