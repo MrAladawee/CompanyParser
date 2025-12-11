@@ -90,11 +90,6 @@ python -m venv .venv
 .venv\Scripts\activate
 ```
 
-```Linux/macOS
-python -m venv .venv
-.venv\Scripts\activate
-```
-
 ## 3. Установка зависимостей
 
 ```bash
